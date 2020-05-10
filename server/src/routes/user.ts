@@ -8,11 +8,12 @@ import middleware from '../middleware';
 const router = express.Router();
 applyMiddleware(middleware, router);
 
-
-router.get('/', (_req, res, _next) => {
-  res.send('User: respond with a resource');
-});
-
+// Create a new User
 router.post('/create', validate(userValidation, {}, {}), userController.create);
+
+ // Retrieve all Users
+router.get('/', userController.findAll);
+
+
 
 export default router;
