@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
-const useAddForm = (cb: () => void) => {
-  const [inputs, setInputs] = useState<any>({});
+const useManageForm = (cb: (data: any) => void, inputValues = {}) => {
+  const [inputs, setInputs] = useState<any>(inputValues);
 
   const handleSubmit = (event: { preventDefault: () => void; }) => {
     if (event) {
       event.preventDefault();
     }
-    cb();
+    cb(inputs);
   }
   const handleInputChange = (event: { persist: () => void; target: { name: any; value: any; }; }) => {
     event.persist();
@@ -20,4 +20,4 @@ const useAddForm = (cb: () => void) => {
   };
 }
 
-export default useAddForm;
+export default useManageForm;

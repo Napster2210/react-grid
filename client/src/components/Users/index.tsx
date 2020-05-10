@@ -23,7 +23,7 @@ const Users = () => {
       {
         showModal &&
         <Modal title='Add User' closeCallback={() => setShowModal(false)}>
-          <AddUser />
+          <AddUser onSuccess={() => setShowModal(false)} />
         </Modal>
       }
     </>

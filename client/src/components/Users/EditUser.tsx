@@ -6,13 +6,15 @@ import { User } from '../../utils/constants';
 
 interface Props {
   onSuccess: () => void;
+  userId: string;
+  data: User;
 }
 
-const AddUser = (props: Props) => {
+const EditUser = (props: Props) => {
 
-  const addUser = async (data: User) => {
-    const response = await fetch(`${API_URL}/users/create`, {
-      method: 'POST',
+  const updateUser = async (data: User) => {
+    const response = await fetch(`${API_URL}/users/${props.userId}`, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -31,7 +33,7 @@ const AddUser = (props: Props) => {
     });
 
     if (response.status === 200) {
-      alert('User created successfully!');
+      alert('User updated successfully!');
       props.onSuccess();
     } else {
       alert('Something went wrong! Please try again.');
@@ -40,10 +42,11 @@ const AddUser = (props: Props) => {
 
   return (
     <UserForm
-      buttonLabel={'ADD'}
-      callbackFn={addUser}
+      buttonLabel={'UPDATE'}
+      callbackFn={updateUser}
+      userData={props.data}
     />
   );
 }
 
-export default AddUser;
+export default EditUser;

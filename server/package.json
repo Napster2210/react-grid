@@ -4,10 +4,9 @@
   "private": true,
   "main": "dist/app.js",
   "scripts": {
-    "build": "tsc",
-    "start": "npm run build && node dist/app.js",
+    "start": "tsc && node dist/app.js",
     "client": "cd ../client && npm run start",
-    "server": "npm run build && nodemon dist/app.js",
+    "server": "tsc && concurrently \"tsc -w\" \"nodemon dist/app.js\"",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "dependencies": {
