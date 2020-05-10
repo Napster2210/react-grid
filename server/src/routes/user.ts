@@ -11,9 +11,16 @@ applyMiddleware(middleware, router);
 // Create a new User
 router.post('/create', validate(userValidation, {}, {}), userController.create);
 
- // Retrieve all Users
+// Retrieve all Users
 router.get('/', userController.findAll);
 
+// Retrieve a single User with userId
+router.get('/:userId', userController.findOne);
 
+// Update a User with userId
+router.put('/:userId', validate(userValidation, {}, {}), userController.update);
+
+// Delete a Note with userId
+router.delete('/:userId', userController.delete);
 
 export default router;
