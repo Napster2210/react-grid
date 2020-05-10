@@ -5,10 +5,31 @@ import useAddForm from '../../hooks/AddFormHook';
 
 const AddUser = () => {
 
-  const addUser = () => {
-    alert(`User Created!
-         Name: ${inputs.firstName} ${inputs.lastName}
-         Email: ${inputs.email}`);
+  const addUser = async () => {
+    const response = await fetch('/users/add-user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        firstName: inputs.firstName,
+        lastName: inputs.lastName,
+        role: inputs.role,
+        email: inputs.email,
+        status: inputs.status,
+      }),
+    });
+    debugger
+    const body = await response.json();
+    // const response = await fetch('/api/world', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({ post: 'test' }),
+    // });
+    // const body = await response.text();
+    console.log('result', body);
   }
   const { inputs, handleInputChange, handleSubmit } = useAddForm(addUser);
 
@@ -35,7 +56,14 @@ const AddUser = () => {
           required />
       </div>
       <div className='Form-control'>
-        <select name='role' placeholder='Role' className='Select-box Full-width' onChange={handleInputChange} value={inputs.role}>
+        <select
+          name='role'
+          placeholder='Role'
+          className='Select-box Full-width'
+          onChange={handleInputChange}
+          value={inputs.role}
+          required>
+          <option selected disabled>Choose Role</option>
           <option value='admin'>Admin</option>
           <option value='partner'>Partner</option>
         </select>
@@ -51,7 +79,14 @@ const AddUser = () => {
           required />
       </div>
       <div className='Form-control'>
-        <select name='status' placeholder='Status' className='Select-box Full-width' onChange={handleInputChange} value={inputs.status}>
+        <select
+          name='status'
+          placeholder='Status'
+          className='Select-box Full-width'
+          onChange={handleInputChange}
+          value={inputs.status}
+          required>
+          <option selected disabled>Choose Status</option>
           <option value='active'>Active</option>
           <option value='inactive'>InActive</option>
         </select>
