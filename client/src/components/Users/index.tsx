@@ -126,7 +126,7 @@ const Users = () => {
           <h3>Users</h3>
           <div>
             <Button onClick={() => setShowAddModal(true)}>Add</Button>
-            <input placeholder='Search...' className='Text-input' />
+            {/* <input placeholder='Search...' className='Text-input' /> */}
           </div>
         </div>
       </div>
