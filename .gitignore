@@ -6,6 +6,7 @@ client/build
 
 server/node_modules/
 server/dist/
+server/.env
 
 .DS_Store
 *.tgz
@@ -14,4 +15,3 @@ yarn-debug.log*
 yarn-error.log*
 /.changelog
 .npm/
-

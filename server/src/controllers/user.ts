@@ -25,7 +25,7 @@ export default {
   },
   // Retrieve and return all users from the database
   findAll: (_req, res) => {
-    User.find()
+    User.find().sort('-updatedAt')
       .then(users => {
         res.json(users);
       }).catch(err => {
@@ -34,7 +34,7 @@ export default {
         });
       });
   },
-  // Find a single user with a userId
+  // Find a single user with a userId (Not In Use: Just for testing purpose)
   findOne: (req, res) => {
     User.findById(req.params.userId)
       .then(user => {

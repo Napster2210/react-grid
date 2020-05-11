@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Users.css';
 import { API_URL } from '../../utils/constants';
 import UserForm from './UserForm';
 import { User } from '../../utils/constants';
+import Loading from '../Loading';
 
 interface Props {
   onSuccess: () => void;
   userId: string;
-  data: User;
+  data?: User;
 }
 
 const EditUser = (props: Props) => {
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const updateUser = async (data: User) => {
+    setIsLoading(true);
     const response = await fetch(`${API_URL}/users/${props.userId}`, {
       method: 'PUT',
       headers: {
@@ -26,13 +30,16 @@ const EditUser = (props: Props) => {
         status: data.status,
       }),
       mode: "cors",
-    }).then(data => {
-      return data;
-    }).catch(error => {
-      return error;
-    });
+    })
+      .then(res => res.json())
+      .then(data => { return data; })
+      .catch(error => {
+        alert('Error while updating data!');
+        console.error('Error', error);
+      })
+      .finally(() => setIsLoading(false));
 
-    if (response.status === 200) {
+    if (response) {
       alert('User updated successfully!');
       props.onSuccess();
     } else {
@@ -41,11 +48,17 @@ const EditUser = (props: Props) => {
   }
 
   return (
-    <UserForm
-      buttonLabel={'UPDATE'}
-      callbackFn={updateUser}
-      userData={props.data}
-    />
+    <>
+      <UserForm
+        buttonLabel={'UPDATE'}
+        callbackFn={updateUser}
+        userData={props.data}
+      />
+      {
+        isLoading &&
+        <Loading loadingText='Updating user...' />
+      }
+    </>
   );
 }
 

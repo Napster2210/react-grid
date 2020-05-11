@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Users.css';
 import { API_URL } from '../../utils/constants';
 import UserForm from './UserForm';
 import { User } from '../../utils/constants';
+import Loading from '../Loading';
 
 interface Props {
   onSuccess: () => void;
@@ -10,7 +11,10 @@ interface Props {
 
 const AddUser = (props: Props) => {
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const addUser = async (data: User) => {
+    setIsLoading(true);
     const response = await fetch(`${API_URL}/users/create`, {
       method: 'POST',
       headers: {
@@ -24,13 +28,15 @@ const AddUser = (props: Props) => {
         status: data.status,
       }),
       mode: "cors",
-    }).then(data => {
-      return data;
-    }).catch(error => {
-      return error;
-    });
-
-    if (response.status === 200) {
+    })
+      .then(res => res.json())
+      .then(data => { return data; })
+      .catch(error => {
+        alert('Error while adding data!');
+        console.error('Error', error);
+      })
+      .finally(() => setIsLoading(false));
+    if (response) {
       alert('User created successfully!');
       props.onSuccess();
     } else {
@@ -39,10 +45,16 @@ const AddUser = (props: Props) => {
   }
 
   return (
-    <UserForm
-      buttonLabel={'ADD'}
-      callbackFn={addUser}
-    />
+    <>
+      <UserForm
+        buttonLabel={'ADD'}
+        callbackFn={addUser}
+      />
+      {
+        isLoading &&
+        <Loading loadingText='Adding user...' />
+      }
+    </>
   );
 }
 
