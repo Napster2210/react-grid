@@ -1,13 +1,22 @@
 import React from 'react';
 import './Table.css';
-
+/**
+ * Interface for Table
+ *
+ * @interface Props
+ */
 interface Props {
   columns: any[];
   rows: any[];
   onEdit: (data: any) => void;
   onDelete: (userId: string) => void;
 }
-
+/**
+ * Table component
+ *
+ * @param {Props} props Table Props
+ * @returns Table
+ */
 const Table = (props: Props) => {
 
   return (

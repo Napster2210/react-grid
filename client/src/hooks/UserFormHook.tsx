@@ -1,5 +1,11 @@
 import { useState } from 'react';
-
+/**
+ * Hook to manage form input fields
+ *
+ * @param {(data: any) => void} cb Submit Callback
+ * @param {*} [inputValues={}] Input field values
+ * @returns
+ */
 const useManageForm = (cb: (data: any) => void, inputValues = {}) => {
   const [inputs, setInputs] = useState<any>(inputValues);
 

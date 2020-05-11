@@ -4,15 +4,28 @@ import { API_URL } from '../../utils/constants';
 import UserForm from './UserForm';
 import { User } from '../../utils/constants';
 import Loading from '../Loading';
-
+/**
+ * Interface for AddUser
+ *
+ * @interface Props
+ */
 interface Props {
   onSuccess: () => void;
 }
-
+/**
+ * AddUser component
+ *
+ * @param {Props} props AddUser Props
+ * @returns AddUser Form
+ */
 const AddUser = (props: Props) => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  /**
+   * To store a new user to DB
+   *
+   * @param {User} data User data
+   */
   const addUser = async (data: User) => {
     setIsLoading(true);
     const response = await fetch(`${API_URL}/users/create`, {

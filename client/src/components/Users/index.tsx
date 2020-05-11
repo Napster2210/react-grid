@@ -8,13 +8,17 @@ import { getFormattedDate, capitalize } from '../../utils/helper';
 import { User, API_URL } from '../../utils/constants';
 import EditUser from './EditUser';
 import Loading from '../Loading';
-
+/**
+ * Interface for Table Columns
+ *
+ * @interface Column
+ */
 interface Column {
   id: 'name' | 'role' | 'createdAt' | 'status' | 'action';
   label: string;
   format?: (value: any) => string;
 }
-
+// Table columns configuration
 const columns: Column[] = [
   {
     id: 'name',
@@ -40,7 +44,11 @@ const columns: Column[] = [
     label: 'Action'
   }
 ];
-
+/**
+ * User component
+ *
+ * @returns User Screen
+ */
 const Users = () => {
   const [showAddModal, setShowAddModal] = useState<boolean>(false);
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
@@ -52,7 +60,10 @@ const Users = () => {
   useEffect(() => {
     getUsers();
   }, []);
-
+  /**
+   * To get all the users from DB
+   *
+   */
   const getUsers = async () => {
     setIsLoading(true);
     await fetch(`${API_URL}/users/`, {
@@ -70,7 +81,11 @@ const Users = () => {
       })
       .finally(() => setIsLoading(false));
   }
-
+  /**
+   * To edit user details
+   *
+   * @param {*} user User details to be edited
+   */
   const handleEdit = (user: any) => {
     setActiveId(user._id);
     setSelectedUser({
@@ -82,7 +97,11 @@ const Users = () => {
     });
     setShowEditModal(true);
   }
-
+  /**
+   * To delete the user (Soft Delete: The `status` of the user will be set as `inactive`)
+   *
+   * @param {string} userId User ID
+   */
   const handleDelete = async (userId: string) => {
     setActiveId(userId);
     if (window.confirm('Are you sure you want to delete this user?')) {
@@ -108,7 +127,11 @@ const Users = () => {
       setActiveId('');
     }
   }
-
+  /**
+   * Modal close callback
+   *
+   * @param {string} modalType Type of modal
+   */
   const onModalClose = async (modalType: string) => {
     await getUsers();
     if (modalType === 'Add') {

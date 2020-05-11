@@ -1,11 +1,21 @@
 import React from 'react';
 import './Modal.css';
-
+/**
+ * Interface for Modal
+ *
+ * @interface Props
+ */
 interface Props {
   children: JSX.Element;
   title: string;
   closeCallback: () => void;
 }
+/**
+ * Modal component
+ *
+ * @param {Props} props Modal Props
+ * @returns Modal
+ */
 const Modal = (props: Props) => {
   return (
     <div className='Backdrop-overlay Fade-out'>

@@ -3,12 +3,22 @@ import './Users.css';
 import Button from '../Button';
 import useManageForm from '../../hooks/UserFormHook';
 import { User } from '../../utils/constants';
-
+/**
+ * Interface for User Form
+ *
+ * @interface Props
+ */
 interface Props {
   buttonLabel: string;
   callbackFn: (data: User) => void;
   userData?: User;
 }
+/**
+ * UserForm component
+ *
+ * @param {Props} props UserForm Props
+ * @returns UserForm
+ */
 const UserForm = (props: Props) => {
   const { callbackFn = () => { }, userData = {}, buttonLabel } = props;
   const { inputs, handleInputChange, handleSubmit } = useManageForm(callbackFn, userData);
