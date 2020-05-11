@@ -55,7 +55,9 @@ const Users = () => {
   const [selectedUser, setSelectedUser] = useState<User | undefined>(undefined);
   const [activeId, setActiveId] = useState<string>('');
   const [users, setUsers] = useState<User[]>([]);
+  const [initialUsers, setInitialUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
   useEffect(() => {
     getUsers();
@@ -74,7 +76,10 @@ const Users = () => {
       mode: "cors",
     })
       .then(response => response.json())
-      .then(data => setUsers(data))
+      .then(data => {
+        setUsers(data);
+        setInitialUsers(data);
+      })
       .catch(error => {
         alert('Error while fetching data!');
         console.error('Error', error);
@@ -141,7 +146,53 @@ const Users = () => {
       setShowEditModal(false);
     }
   }
+  /**
+   * To search the users
+   *
+   * @param {{ target: { value: React.SetStateAction<string>; }; }} event Change input event
+   * @returns Filtered users
+   */
+  const handleSearch = async (event: { target: { value: React.SetStateAction<string>; }; }) => {
+    setSearchTerm(event.target.value);
+    if (event.target.value.length > 0 && event.target.value.length < 3) {
+      return;
+    }
+    if (event.target.value.length === 0) {
+      setUsers(initialUsers);
+      return;
+    }
+    const checkFirstNameFilter = (user: User) => (
+      user.firstName
+        .toLowerCase()
+        .indexOf(searchTerm) !== -1
+    );
 
+    const checkLastNameFilter = (user: User) => (
+      user.lastName
+        .toLowerCase()
+        .indexOf(searchTerm) !== -1
+    );
+
+    const checkRoleFilter = (user: User) => (
+      user.role
+        .toLowerCase()
+        .indexOf(searchTerm) !== -1
+    );
+
+    const checkStatusFilter = (user: User) => (
+      user.status
+        .toLowerCase()
+        .indexOf(searchTerm) !== -1
+    );
+
+    const filteredData = users.filter((user: User) =>
+      checkFirstNameFilter(user) ||
+      checkLastNameFilter(user) ||
+      checkRoleFilter(user) ||
+      checkStatusFilter(user)
+    );
+    setUsers(filteredData);
+  }
   return (
     <>
       <div className='Wrapper'>
@@ -149,7 +200,7 @@ const Users = () => {
           <h3>Users</h3>
           <div>
             <Button onClick={() => setShowAddModal(true)}>Add</Button>
-            {/* <input placeholder='Search...' className='Text-input' /> */}
+            <input placeholder='Search...' className='Text-input' value={searchTerm} onChange={handleSearch} />
           </div>
         </div>
       </div>

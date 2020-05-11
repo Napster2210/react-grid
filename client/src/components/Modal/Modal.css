@@ -13,13 +13,16 @@
 }
 
 .Modal-container {
-  margin: 15% auto;
   background-color: white;
   border-radius: 0.25rem;
   width: 80vw;
   padding: 1px;
-  position: relative;
   max-width: 480px;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  position: absolute;
+  transform: translate(-50%, -50%);
 }
 
 .Modal-header {

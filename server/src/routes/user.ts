@@ -20,7 +20,7 @@ router.get('/:userId', userController.findOne);
 // Update a User with userId
 router.put('/:userId', validate(userValidation, {}, {}), userController.update);
 
-// Delete a Note with userId
+// Delete a User with userId
 router.delete('/:userId', userController.delete);
 
 export default router;
