@@ -13,7 +13,7 @@ export default {
       status
     });
 
-    // Save Note in the database
+    // Save User in the database
     user.save()
       .then(data => {
         res.json(data);
@@ -23,7 +23,7 @@ export default {
         });
       });
   },
-  // Retrieve and return all users from the database
+  // Retrieve and return all the users from the database
   findAll: (_req, res) => {
     User.find().sort('-updatedAt')
       .then(users => {
@@ -57,7 +57,7 @@ export default {
   },
   // Update a user identified by the userId in the request
   update: (req, res) => {
-    // Find user and update it with the request body
+    // Find a user by id and update it with the request body
     const { firstName, lastName, email, role, status } = req.body;
     User.findByIdAndUpdate(req.params.userId, {
       firstName,
@@ -86,7 +86,7 @@ export default {
   },
   // Delete a user with the specified userId in the request
   delete: (req, res) => {
-    // Find user and update the status to "inactive"(Soft Delete)
+    // Find a user by id and update the status to "inactive"(Soft Delete)
     User.findByIdAndUpdate(req.params.userId, {
       status: 'inactive'
     }, { new: true })

@@ -26,7 +26,7 @@ app.use(logger('dev'));
 app.use('/users', userRouter);
 
 app.get('/api/hello', (req, res) => {
-  res.send({ express: 'Hello From Express' });
+  res.send({ express: 'Hello From Express!' });
 });
 
 // catch 404 and forward to error handler

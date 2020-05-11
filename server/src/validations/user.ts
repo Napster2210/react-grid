@@ -1,5 +1,6 @@
 import { Joi } from 'express-validation';
 
+// User validations
 const userValidation = {
   body: Joi.object({
     firstName: Joi.string().regex(/^[A-Za-z]+$/).min(3).max(30).required(),
